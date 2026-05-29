@@ -1,0 +1,38 @@
+experiment_name: turbo_ackley200_original_protocol
+benchmarks:
+- ackley_200
+methods:
+- turbo
+seeds:
+- 1
+- 27
+- 42
+- 86
+- 99
+budget: 15000
+n_init: 200
+batch_size: 100
+device: cuda
+dtype: float64
+objective_noise_std: 0.0
+standardize_y: true
+continue_on_error: false
+kernel: matern52
+use_ard: true
+turbo_length_init: 0.8
+turbo_length_min: 0.0078125
+turbo_length_max: 1.6
+turbo_success_tolerance: 3
+turbo_failure_tolerance: 0
+turbo_gp_train_steps: 50
+turbo_gp_lr: 0.1
+turbo_n_candidates: 0
+turbo_max_local_points: 2048
+turbo_min_cuda: 1024
+turbo_max_cholesky_size: 2000
+turbo_noise_min: 0.0005
+turbo_noise_max: 0.2
+turbo_lengthscale_min: 0.005
+turbo_lengthscale_max: 2.0
+turbo_outputscale_min: 0.05
+turbo_outputscale_max: 20.0

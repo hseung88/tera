@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tera-dgp"
+version = "0.1.0"
+description = "TERA: target-specific exact gradient reduction for scalable derivative Gaussian processes"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+dependencies = [
+  "PyYAML>=6.0",
+  "torch>=2.4.1",
+  "pandas>=2.0",
+  "matplotlib>=3.7",
+  "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+md22_external = [
+  "scipy>=1.14.1",
+  "scikit-learn>=1.5.2",
+  "omegaconf>=2.3.0",
+  "hydra-core",
+  "tqdm==4.66.5",
+  "wandb",
+  "botorch==0.11.3",
+  "seaborn>=0.13.2",
+  "requests>=2.32.3",
+]
+
+bo = [
+  "botorch>=0.11.3",
+  "gpytorch>=1.12",
+  "linear-operator>=0.5",
+  "pyro-ppl>=1.9",
+]
+
+[project.scripts]
+run-gp-sim-kl = "gp_sim_kl.cli.run_gp_sim_kl_subprocess:main"
+plot-gp-sim-kl = "gp_sim_kl.cli.plot_gp_sim_kl:main"
+run-md22-regression = "md22_regression.main:main"
+plot-md22-regression = "md22_regression.cli.plot_md22_regression:main"
+run-bo-synthetic = "bo_experiments.runner:main"
+plot-bo-synthetic = "bo_experiments.cli.plot_bo:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["gp_sim_kl*", "md22_regression*", "bo_experiments*"]

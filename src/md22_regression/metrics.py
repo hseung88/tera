@@ -1,0 +1,39 @@
+from __future__ import annotations
+
+import torch
+
+def normalized_energy_rmse_per_atom(y_pred: torch.Tensor, y_true: torch.Tensor, n_atoms: int) -> float:
+    """RMSE per atom in the normalized scalar target space.
+
+    The MD22 target is y=(-E+mean_train_E)/std_train_E. This metric is
+    sqrt(mean((y_pred-y_true)^2))/n_atoms.
+    """
+    rmse = torch.sqrt(torch.mean((y_pred.reshape(-1) - y_true.reshape(-1)).pow(2)))
+    return float((rmse / float(n_atoms)).detach().cpu())
+
+def energy_rmse_per_atom(E_pred: torch.Tensor, E_true: torch.Tensor, n_atoms: int) -> float:
+    """RMSE per atom for raw energy tensors in the original MD22 unit."""
+    E_pred = E_pred.reshape(-1)
+    E_true = E_true.to(device=E_pred.device, dtype=E_pred.dtype).reshape(-1)
+    rmse = torch.sqrt(torch.mean((E_pred - E_true).pow(2)))
+    return float((rmse / float(n_atoms)).detach().cpu())
+
+def raw_energy_rmse_per_atom(
+    y_pred: torch.Tensor,
+    E_true: torch.Tensor,
+    *,
+    energy_mean: torch.Tensor | float,
+    energy_std: torch.Tensor | float,
+    n_atoms: int,
+) -> float:
+    """RMSE per atom in the original MD22 energy unit.
+
+    Predictions are in the normalized target convention y=(-E+mean_train_E)/std_train_E.
+    The inverse transform is E=mean_train_E-std_train_E*y.
+    """
+    mean = torch.as_tensor(energy_mean, device=y_pred.device, dtype=y_pred.dtype)
+    std = torch.as_tensor(energy_std, device=y_pred.device, dtype=y_pred.dtype)
+    E_pred = mean - std * y_pred.reshape(-1)
+    E_true = E_true.to(device=y_pred.device, dtype=y_pred.dtype).reshape(-1)
+    rmse = torch.sqrt(torch.mean((E_pred - E_true).pow(2)))
+    return float((rmse / float(n_atoms)).detach().cpu())

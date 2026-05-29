@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+outputs/
+
+# Large datasets
+data/md22/*.npz
+data/md22/*.npy
+data/md22/
+outputs/

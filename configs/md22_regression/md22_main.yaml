@@ -1,0 +1,59 @@
+experiment_name: md22_regression_energy
+
+data_dir: data/md22
+datasets: [DHA, AT-AT, stachyose, AT-AT-CG-CG, buckyball-catcher, double-walled-nanotube]
+methods: [Exact GP, DSoftKI, DDSVGP, TERA]
+seeds: [6535, 8830, 92357]
+train_frac: 0.9
+test_frac: 0.1
+n_train: null
+n_test: null
+
+device: cuda
+dtype: float32
+kernel: rbf
+use_ard: false
+lengthscale: 1.0
+outputscale: 1.0
+sigma_f: 1.0e-3
+sigma_g: 1.0e-3
+x_scale: 3.0
+preprocessing_version: md22_v1_neg_energy_train_energy_std_chain_rule
+
+export_fair_data: true
+fair_data_dir: null
+strict_external_fairness: true
+external_results_csv: null
+out_csv_name: results.csv
+verbose: true
+
+m: 20
+exact_max_train: 100000
+
+exact_train_steps: 50
+exact_train_epochs: 0
+exact_lr: null
+exact_lr_default: 0.01
+exact_lr_by_dataset:
+  double-walled-nanotube: 0.005
+exact_weight_decay: 0.0
+exact_learn_lengthscale: true
+exact_learn_outputscale: true
+exact_learn_sigma_f: true
+exact_min_sigma_f: 1.0e-6
+exact_log_every: 25
+
+tera_train_steps: 0
+tera_train_epochs: 1
+tera_graph_refresh_epochs: 0
+tera_batch_size: 256
+tera_lr: 0.01
+tera_weight_decay: 0.0
+tera_learn_lengthscale: true
+tera_learn_outputscale: true
+tera_learn_sigma_f: true
+tera_learn_sigma_g: true
+tera_min_sigma_f: 1.0e-6
+tera_min_sigma_g: 0.0
+tera_log_every: 25
+tera_gradient_noise_model: iid

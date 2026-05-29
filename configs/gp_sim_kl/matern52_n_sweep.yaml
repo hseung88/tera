@@ -1,0 +1,39 @@
+experiment_name: matern52_n_sweep
+kernel: matern52
+use_ard: false
+lengthscale: null
+target_median_correlation: 0.3
+outputscale: 1.0
+sigma_f: 0.0
+sigma_g: 0.0
+n_train: 150
+n_train_values:
+- 50
+- 100
+- 150
+- 200
+- 250
+- 300
+n_eval: 100
+m: adaptive
+d_values:
+- 150
+repeats: 5
+seed: 42
+device: cuda
+dtype: float32
+design: sobol
+sampling: dense
+dense_sampling_max_obs_dim: 50000
+deroos_sampling_max_n2: 50000
+exact_dense_max_d: 1500
+exact_dense_max_obs_dim: 50000
+vecchia_dense_max_local_dim: 150000
+exact_deroos_max_n: 500
+methods:
+- Exact GP
+- Exact dGP
+- Exact dGP-deRoos
+- Vecchia dGP
+- Vecchia dGP-deRoos
+- TERA
