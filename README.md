@@ -73,7 +73,8 @@ Each experiment has a paper-matching default config and a dedicated reproduction
 @misc{seung2026scalabledgp,
   title         = {Scalable Derivative Gaussian Processes via Exact Gradient Reduction},
   author        = {Seung, Hyunseok and Katzfuss, Matthias},
+  eprint        = {2606.02909},
   archivePrefix = {arXiv},
-  year          = {2026},
+  year          = {2026}
 }
 ```
