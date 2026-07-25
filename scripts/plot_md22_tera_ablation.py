@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 TERA_RED = "#D62728"
 TERA_RED_LIGHT = "#D62728"
 
-M_KEEP = [5, 10, 20, 30]
+M_KEEP = [5, 10, 20, 30, 50]
 NOISE_GRID = [1e-1, 1e-2, 1e-3, 1e-4]
 NTRAIN_GRID = [500, 1000, 2000, 4000]
 
@@ -241,8 +241,11 @@ def main():
     df = pd.read_csv(args.csv)
     df = _clean(df)
 
-    plot_fig1(df, outdir)
-    plot_fig2(df, outdir)
+    if ((df["figure"] == "fig1") & (df["ablation"] == "m_sweep")).any():
+        plot_fig1(df, outdir)
+
+    if ((df["figure"] == "fig2_panel1") & (df["ablation"] == "noise_sweep")).any():
+        plot_fig2(df, outdir)
 
 if __name__ == "__main__":
     main()
