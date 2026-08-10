@@ -300,7 +300,7 @@ def plot_sweep(csv_path: str | Path, outdir: str | Path, sweep_col: str | None =
 
     _apply_mpl_style(plt)
     panel_width = 8.0
-    panel_height = panel_width * 0.6789
+    panel_height = panel_width * 0.72
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(3.0 * panel_width, panel_height))
 
     specs = [
@@ -314,6 +314,14 @@ def plot_sweep(csv_path: str | Path, outdir: str | Path, sweep_col: str | None =
         sub = grp[grp["method"] == method].sort_values(sweep_col)
         for ax, col, ecol, ylabel in specs:
             _plot_series(ax, sub, sweep_col, col, ecol, method, ylabel)
+
+    ax2.set_yscale("log")
+    ax3.set_yscale("log")
+
+    for ax in (ax1, ax2, ax3):
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.tick_params(top=False, right=False)
 
     _collect_legend(fig, (ax1, ax2, ax3), preferred=ordered_methods)
     fig.tight_layout(rect=[0.0, 0.0, 1.0, 0.88])
