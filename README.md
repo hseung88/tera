@@ -1,4 +1,6 @@
-# TERA: Scalable Derivative Gaussian Processes via Exact Gradient Reduction
+# Scalable Derivative Gaussian Processes via Exact Gradient Reduction
+
+> Accepted at **the Conference on Neural Information Processing Systems (NeurIPS 2026)**, December 2026. 
 
 This repository provides the official implementation of **TERA**, a scalable derivative Gaussian process method for 
 scalar function-value prediction with observed input gradients. For each target and its Vecchia conditioning set, 
@@ -70,11 +72,10 @@ Each experiment has a paper-matching default config and a dedicated reproduction
 ## Citation
 
 ```bibtex
-@misc{seung2026scalabledgp,
-  title         = {Scalable Derivative Gaussian Processes via Exact Gradient Reduction},
+@inproceedings{seung2026scalabledg,
   author        = {Seung, Hyunseok and Katzfuss, Matthias},
-  eprint        = {2606.02909},
-  archivePrefix = {arXiv},
+  title         = {Scalable Derivative Gaussian Processes via Exact Gradient Reduction},
+  booktitle     = {Advances in Neural Information Processing Systems},
   year          = {2026}
 }
 ```
