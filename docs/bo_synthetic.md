@@ -6,6 +6,7 @@ reported in the paper, including the evaluation budget, initial design size, TER
 and random seeds.
 TERA uses batched training and prediction, with initial lengthscale 1.0 (`tera_base_lengthscale`).
 The budget is 150 queried locations, including 30 initial points shared across methods for each seed.
+Function-only methods do not evaluate objective gradients.
 
 ---
 ## How to Run
@@ -17,7 +18,7 @@ benchmark=ackley_200
 method=tera
 outdir=outputs/bo_main_ackley200_tera
 
-tera-bo \
+python scripts/run_bo_synthetic.py \
   --config configs/bo/main.yaml \
   --outdir ${outdir} \
   --benchmarks ${benchmark} \
@@ -33,7 +34,7 @@ for benchmark in ackley_200 levy_200; do
   for method in tera vbo turbo-logei sobol; do
     outdir=outputs/bo_main_${benchmark}_${method}
 
-    tera-bo \
+    python scripts/run_bo_synthetic.py \
       --config configs/bo/main.yaml \
       --outdir ${outdir} \
       --benchmarks ${benchmark} \
@@ -51,7 +52,7 @@ benchmark=ackley_200
 method=turbo
 outdir=outputs/bo_ackley_turbo_ts
 
-tera-bo \
+python scripts/run_bo_synthetic.py \
   --config configs/bo/turbo_ts_original.yaml \
   --outdir ${outdir} \
   --benchmarks ${benchmark} \

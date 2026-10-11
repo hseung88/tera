@@ -30,7 +30,7 @@ datasets=DHA,AT-AT,stachyose,AT-AT-CG-CG,buckyball-catcher,double-walled-nanotub
 ### Main Setting: Isotropic SE Kernel
 
 ```bash
-tera-md22-fair \
+python scripts/run_md22_fair_pipeline.py \
   --config configs/md22/main.yaml \
   --outdir outputs/md22_tera_rbf_no_ard \
   --datasets ${datasets} \
@@ -46,7 +46,7 @@ Omit `--methods tera` to run all configured methods: tera, exact gp, dsoftki, an
 ### Additional Setting: ARD Matérn-5/2 Kernel
 
 ```bash
-tera-md22-fair \
+python scripts/run_md22_fair_pipeline.py \
   --config configs/md22/main.yaml \
   --outdir outputs/md22_tera_matern52_ard \
   --datasets ${datasets} \

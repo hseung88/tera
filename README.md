@@ -52,6 +52,8 @@ The right panel reports wall-clock time and peak GPU memory on `Ackley-200D`.
 
 ## Installation
 
+The commands below run local source files directly; installing console commands is not required.
+
 Use Python 3.10 or newer. A CUDA-enabled PyTorch installation is recommended for the main experiments.
 
 ```bash
@@ -68,9 +70,9 @@ Each experiment has a default config for the camera-ready experiments and a dedi
 
 | Experiment                        | Run command                            | Default config                           | Documentation |
 |:----------------------------------|:--------------------------------------|:-----------------------------------------|:--|
-| Posterior fidelity and scaling    | `tera-gp-sim-subprocess` | `configs/gp_sim/matern52_*.yaml`      | `docs/gp_simulation.md` |
-| Large-scale GP regression on MD22 | `tera-md22`   | `configs/md22/main.yaml` | `docs/md22_regression.md` |
-| High-dimensional BO               | `tera-bo`         | `configs/bo/main.yaml`      | `docs/bo_synthetic.md` |
+| Posterior fidelity and scaling    | `python scripts/run_gp_sim_kl_subprocess.py` | `configs/gp_sim/matern52_*.yaml`      | `docs/gp_simulation.md` |
+| Large-scale GP regression on MD22 | `python scripts/run_md22.py`   | `configs/md22/main.yaml` | `docs/md22_regression.md` |
+| High-dimensional BO               | `python scripts/run_bo_synthetic.py`         | `configs/bo/main.yaml`      | `docs/bo_synthetic.md` |
 
 ---
 

@@ -6,6 +6,7 @@ Training inputs and evaluation inputs are sampled separately, and the main metri
 to the exact derivative GP posterior at the evaluation points.
 
 The default configs use a Matérn-5/2 kernel, noiseless function and gradient observations, Sobol designs, and the target median prior correlation calibration reported in the paper.
+TERA prediction is batched. Input and observation seeds are shared across methods and conditioning sizes.
 
 ---
 
@@ -14,17 +15,17 @@ The default configs use a Matérn-5/2 kernel, noiseless function and gradient ob
 The three main sweeps use the same run script. The compared methods, kernel, data sizes, conditioning sizes, and sweep variables are specified in the corresponding config files.
 
 ```bash
-tera-gp-sim-subprocess \
+python scripts/run_gp_sim_kl_subprocess.py \
   --config configs/gp_sim/matern52_m_sweep.yaml \
   --outdir outputs/main_m_sweep \
   --verbose
 
-tera-gp-sim-subprocess \
+python scripts/run_gp_sim_kl_subprocess.py \
   --config configs/gp_sim/matern52_d_sweep.yaml \
   --outdir outputs/main_d_sweep \
   --verbose
 
-tera-gp-sim-subprocess \
+python scripts/run_gp_sim_kl_subprocess.py \
   --config configs/gp_sim/matern52_n_sweep.yaml \
   --outdir outputs/main_n_sweep \
   --verbose
