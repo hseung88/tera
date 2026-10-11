@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b4c0393-12e1-4e8e-8de0-6b59183305ff" name="Changes" comment="v2.0 - tera batched impl" />
+    <list default="true" id="4b4c0393-12e1-4e8e-8de0-6b59183305ff" name="Changes" comment="v2.0 - tera batched impl">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tera/methods/tera/batched_prediction.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tera/methods/tera/batched_prediction.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,6 +44,11 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/tmdgu/PycharmProjects/aistats2027&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tmdgu\PycharmProjects\tera\src\tera\methods\tera" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -81,7 +89,15 @@
       <option name="project" value="LOCAL" />
       <updated>1791686859597</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="v2.0 - tera batched impl">
+      <option name="closed" value="true" />
+      <created>1791688224941</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1791688224941</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

@@ -26,13 +26,20 @@ def solve_joint_batch(matrix, rhs):
         good = info == 0
         if good.any():
             ids = pending[good]
-            # Failed factors must stay outside the backward graph.
-            factors = (
-                torch.linalg.cholesky(matrix[ids] + jitter * eye)
-                if torch.is_grad_enabled() and matrix.requires_grad
-                else probe[good]
-            )
-            result = result.index_copy(0, ids, torch.cholesky_solve(rhs[ids], factors))
+            if torch.is_grad_enabled() and matrix.requires_grad:
+                # A smaller batch can use a different factorization kernel.
+                # Recheck its factors and keep failures out of backward.
+                while ids.numel():
+                    factors, checked = torch.linalg.cholesky_ex(matrix[ids] + jitter * eye)
+                    if not checked.any():
+                        break
+                    good[good.clone()] = checked == 0
+                    ids = pending[good]
+                    del factors
+            else:
+                factors = probe[good]
+            if ids.numel():
+                result = result.index_copy(0, ids, torch.cholesky_solve(rhs[ids], factors))
         pending = pending[~good]
         jitter *= 10.0
         if not pending.numel() or jitter > 1e-1:
