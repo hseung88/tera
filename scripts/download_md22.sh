@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DATA_DIR="${1:-data/md22}"
-BASE_URL="http://www.quantum-machine.org/gdml/repo/datasets"
+data_dir="${1:-data/md22}"
+base_url="http://www.quantum-machine.org/gdml/repo/datasets"
 
-DATASETS=(
+datasets=(
   "DHA"
   "buckyball-catcher"
   "double-walled_nanotube"
@@ -13,19 +13,19 @@ DATASETS=(
   "stachyose"
 )
 
-mkdir -p "${DATA_DIR}"
+mkdir -p "${data_dir}"
 
-for DATASET in "${DATASETS[@]}"; do
-  FILE="md22_${DATASET}.npz"
-  URL="${BASE_URL}/${FILE}"
-  OUT="${DATA_DIR}/${FILE}"
+for dataset in "${datasets[@]}"; do
+  file="md22_${dataset}.npz"
+  url="${base_url}/${file}"
+  out="${data_dir}/${file}"
 
-  if [[ -f "${OUT}" ]]; then
-    echo "Found ${OUT}; skipping."
+  if [[ -f "${out}" ]]; then
+    echo "Found ${out}; skipping."
   else
-    echo "Downloading ${FILE}..."
-    wget -O "${OUT}" "${URL}"
+    echo "Downloading ${file}..."
+    wget -O "${out}" "${url}"
   fi
 done
 
-echo "MD22 datasets are available in ${DATA_DIR}."
+echo "MD22 datasets are available in ${data_dir}."

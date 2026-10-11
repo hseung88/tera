@@ -5,8 +5,10 @@ prediction, with observed forces converted to gradient information. The reported
 after converting predictions back to physical units.
 
 The main comparison uses isotropic squared exponential kernels. The ARD Matérn-5/2 kernel is included as an additional 
-setting. The default settings in `configs/md22_regression/md22_main.yaml` match the paper experiments, including the 
+setting. The default settings in `configs/md22/main.yaml` match the paper experiments, including the 
 TERA conditioning size, noise initialization, training schedule, batch size, and learning rate.
+TERA uses batched training and prediction with batch size 32.
+TERA defaults to scaled gradient noise with ARD and iid gradient noise with an isotropic kernel, unless explicitly overridden.
 
 ---
 ## Download MD22 Data
@@ -22,36 +24,36 @@ bash scripts/download_md22.sh
 Set the common dataset list once.
 
 ```bash
-DATASETS=DHA,AT-AT,stachyose,AT-AT-CG-CG,buckyball-catcher,double-walled-nanotube
+datasets=DHA,AT-AT,stachyose,AT-AT-CG-CG,buckyball-catcher,double-walled-nanotube
 ```
 
 ### Main Setting: Isotropic SE Kernel
 
 ```bash
-python scripts/run_md22_fair_pipeline.py \
-  --config configs/md22_regression/md22_main.yaml \
+tera-md22-fair \
+  --config configs/md22/main.yaml \
   --outdir outputs/md22_tera_rbf_no_ard \
-  --datasets ${DATASETS} \
+  --datasets ${datasets} \
   --device cuda:0 \
   --kernel rbf \
   --no-use-ard \
-  --internal-methods "TERA" \
-  --skip-external \
+  --methods tera \
   --verbose
 ```
+
+Omit `--methods tera` to run all configured methods: tera, exact gp, dsoftki, and ddsvgp.
 
 ### Additional Setting: ARD Matérn-5/2 Kernel
 
 ```bash
-python scripts/run_md22_fair_pipeline.py \
-  --config configs/md22_regression/md22_main.yaml \
+tera-md22-fair \
+  --config configs/md22/main.yaml \
   --outdir outputs/md22_tera_matern52_ard \
-  --datasets ${DATASETS} \
+  --datasets ${datasets} \
   --device cuda:0 \
   --kernel matern52 \
   --use-ard \
-  --internal-methods "TERA" \
-  --skip-external \
+  --methods tera \
   --tera-gradient-noise-model scaled \
   --verbose
 ```

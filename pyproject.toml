@@ -3,53 +3,38 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tera-dgp"
-version = "0.1.0"
-description = "TERA: target-specific exact gradient reduction for scalable derivative Gaussian processes"
-readme = "README.md"
+name = "tera-derivative-gp"
+version = "1.0.0"
+description = "TERA camera-ready experiments with batched exact gradient reduction"
 requires-python = ">=3.10"
-license = { text = "MIT" }
-
-dependencies = [
-  "PyYAML>=6.0",
-  "torch>=2.4.1",
-  "pandas>=2.0",
-  "matplotlib>=3.7",
-  "numpy>=1.24",
-]
+dependencies = ["torch>=2.0", "numpy>=1.23", "pandas>=2.0", "matplotlib>=3.7", "PyYAML>=6.0", "scipy>=1.10"]
 
 [project.optional-dependencies]
-md22_external = [
-  "scipy>=1.14.1",
-  "scikit-learn>=1.5.2",
-  "omegaconf>=2.3.0",
-  "hydra-core",
-  "tqdm==4.66.5",
-  "wandb",
-  "botorch==0.11.3",
-  "seaborn>=0.13.2",
-  "requests>=2.32.3",
-]
-
-bo = [
-  "botorch>=0.11.3",
-  "gpytorch>=1.12",
-  "linear-operator>=0.5",
-  "pyro-ppl>=1.9",
-]
-
-[project.scripts]
-run-gp-sim-kl = "gp_sim_kl.cli.run_gp_sim_kl_subprocess:main"
-plot-gp-sim-kl = "gp_sim_kl.cli.plot_gp_sim_kl:main"
-run-md22-regression = "md22_regression.main:main"
-plot-md22-regression = "md22_regression.cli.plot_md22_regression:main"
-run-bo-synthetic = "bo_experiments.runner:main"
-plot-bo-synthetic = "bo_experiments.cli.plot_bo:main"
-
-[tool.setuptools]
-package-dir = {"" = "src"}
-include-package-data = true
+md22 = ["gpytorch>=1.12", "linear-operator>=0.5", "omegaconf>=2.3", "scikit-learn>=1.3", "tqdm>=4.66"]
+bo = ["botorch>=0.11.3", "gpytorch>=1.12", "linear-operator>=0.5", "pyro-ppl>=1.9"]
+dev = ["ruff>=0.9"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["gp_sim_kl*", "md22_regression*", "bo_experiments*"]
+[tool.setuptools.package-data]
+"tera.methods" = ["LICENSE", "NOTICE.md"]
+
+[project.scripts]
+tera-md22-fair = "tera.experiments.md22.pipeline:main"
+tera-md22 = "tera.experiments.md22.runner:main"
+tera-md22-sweep = "tera.experiments.md22.ablation:main"
+tera-plot-md22 = "tera.experiments.md22.plot_cli:main"
+tera-plot-md22-sweep = "tera.experiments.md22.plot_ablation:main"
+tera-bo = "tera.experiments.bo.runner:main"
+tera-bo-sweep = "tera.experiments.bo.sweep:main"
+tera-bo-cost = "tera.experiments.bo.cost:main"
+tera-plot-bo = "tera.experiments.bo.plot_cli:main"
+tera-gp-sim = "tera.experiments.gp_sim.cli.run_gp_sim_kl:main"
+tera-gp-sim-subprocess = "tera.experiments.gp_sim.cli.run_gp_sim_kl_subprocess:main"
+tera-plot-gp-sim = "tera.experiments.gp_sim.cli.plot_gp_sim_kl:main"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

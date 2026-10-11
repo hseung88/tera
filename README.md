@@ -8,6 +8,9 @@ TERA replaces the full gradient by target-specific reduced directional derivativ
 reduction preserves the corresponding full-gradient conditional density exactly, while avoiding the dense derivative 
 covariance over all gradient coordinates.
 
+TERA training and prediction use batched reduced conditional systems.
+Method names in commands, results, and plot legends are lowercase; existing result labels remain supported.
+
 The code reproduces the experiments for:
 
 - GP-simulated posterior fidelity and computational scaling relative to exact derivative GP inference.
@@ -17,6 +20,8 @@ The code reproduces the experiments for:
 ---
 
 ## Main Results
+
+The figures below show the original submission results; camera-ready experiments are being rerun.
 
 ### Posterior Fidelity and Scaling
 
@@ -39,7 +44,7 @@ and identical train and test splits. Lower values are better in all panels.
 
 ![High-dimensional Bayesian optimization](figures/bo_main_regret.png)
 
-**Figure 3:** High-dimensional BO under a fixed budget of 150 objective evaluations. The first two 
+**Figure 3:** High-dimensional BO under a fixed budget of 150 queried locations, including the initial design. The first two 
 panels report simple regret on the full-dimensional `Levy-200D` and `Ackley-200D` benchmarks, respectively. 
 The right panel reports wall-clock time and peak GPU memory on `Ackley-200D`.
 
@@ -52,20 +57,20 @@ Use Python 3.10 or newer. A CUDA-enabled PyTorch installation is recommended for
 ```bash
 python -m venv tera
 source tera/bin/activate
-pip install -e .
+pip install -e '.[md22,bo]'
 ```
 ---
 
 ## Experiments
 
-Each experiment has a paper-matching default config and a dedicated reproduction guide with the exact run and plotting commands.
+Each experiment has a default config for the camera-ready experiments and a dedicated reproduction guide with run commands.
 
 
-| Experiment                        | Run script                            | Default config                           | Documentation |
+| Experiment                        | Run command                            | Default config                           | Documentation |
 |:----------------------------------|:--------------------------------------|:-----------------------------------------|:--|
-| Posterior fidelity and scaling    | `scripts/run_gp_sim_kl_subprocess.py` | `configs/gp_sim_kl/matern52_*.yaml`      | `docs/gp_simulation.md` |
-| Large-scale GP regression on MD22 | `scripts/run_md22_fair_pipeline.py`   | `configs/md22_regression/md22_main.yaml` | `docs/md22_regression.md` |
-| High-dimensional BO               | `scripts/run_bo_synthetic.py`         | `configs/bo_synthetic/bo_main.yaml`      | `docs/bo_synthetic.md` |
+| Posterior fidelity and scaling    | `tera-gp-sim-subprocess` | `configs/gp_sim/matern52_*.yaml`      | `docs/gp_simulation.md` |
+| Large-scale GP regression on MD22 | `tera-md22`   | `configs/md22/main.yaml` | `docs/md22_regression.md` |
+| High-dimensional BO               | `tera-bo`         | `configs/bo/main.yaml`      | `docs/bo_synthetic.md` |
 
 ---
 

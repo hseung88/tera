@@ -14,18 +14,18 @@ The default configs use a Matérn-5/2 kernel, noiseless function and gradient ob
 The three main sweeps use the same run script. The compared methods, kernel, data sizes, conditioning sizes, and sweep variables are specified in the corresponding config files.
 
 ```bash
-python scripts/run_gp_sim_kl_subprocess.py \
-  --config configs/gp_sim_kl/matern52_m_sweep.yaml \
+tera-gp-sim-subprocess \
+  --config configs/gp_sim/matern52_m_sweep.yaml \
   --outdir outputs/main_m_sweep \
   --verbose
 
-python scripts/run_gp_sim_kl_subprocess.py \
-  --config configs/gp_sim_kl/matern52_d_sweep.yaml \
+tera-gp-sim-subprocess \
+  --config configs/gp_sim/matern52_d_sweep.yaml \
   --outdir outputs/main_d_sweep \
   --verbose
 
-python scripts/run_gp_sim_kl_subprocess.py \
-  --config configs/gp_sim_kl/matern52_n_sweep.yaml \
+tera-gp-sim-subprocess \
+  --config configs/gp_sim/matern52_n_sweep.yaml \
   --outdir outputs/main_n_sweep \
   --verbose
 ```
