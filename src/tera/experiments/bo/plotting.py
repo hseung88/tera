@@ -10,14 +10,16 @@ from matplotlib.ticker import FuncFormatter as func_formatter_type
 from matplotlib.patches import Patch as patch_type
 
 method_order = ["sobol", "lbfgsb", "vbo", "turbo-logei", "turbo", "tera"]
+
 method_labels = {
-    "lbfgsb": 'l-bfgs-b',
-    "sobol": 'sobol',
-    "vbo": 'vbo',
-    "turbo": 'turbo-1 ts',
-    "turbo-logei": 'turbo-1',
-    "tera": 'tera',
+    "lbfgsb": "L-BFGS-B",
+    "sobol": "Sobol",
+    "vbo": "VBO",
+    "turbo": "TuRBO-1 TS",
+    "turbo-logei": "TuRBO-1",
+    "tera": "TERA",
 }
+
 method_colors = {
     "lbfgsb": "#2CA02C",
     "sobol": "#000000",
@@ -26,6 +28,7 @@ method_colors = {
     "turbo-logei": "#FF7F0E",
     "tera": "#D62728",
 }
+
 markers = {
     "lbfgsb": "s",
     "sobol": "X",
@@ -34,6 +37,7 @@ markers = {
     "turbo-logei": "D",
     "tera": "*",
 }
+
 linestyles = {
     "lbfgsb": "-.",
     "sobol": "--",

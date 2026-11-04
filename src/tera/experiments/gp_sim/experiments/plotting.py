@@ -17,6 +17,16 @@ draw_order = [
     'tera',
 ]
 
+display_names = {
+    "exact gp": "Exact GP",
+    "exact dgp": "Exact dGP",
+    "exact dgp-deroos": "Exact dGP-deRoos",
+    "vecchia gp": "Vecchia GP",
+    "vecchia dgp": "Vecchia dGP",
+    "vecchia dgp-deroos": "Vecchia dGP-deRoos",
+    "tera": "TERA",
+}
+
 legend_method_order = [
     'exact gp',
     'exact dgp',
@@ -296,7 +306,7 @@ def _collect_legend(
 
     fig.legend(
         handles=handles,
-        labels=ordered,
+        labels=[display_names.get(m, m) for m in ordered],
         loc="upper center",
         bbox_to_anchor=(0.5, y),
         ncol=ncol,

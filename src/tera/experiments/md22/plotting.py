@@ -17,10 +17,10 @@ method_order = [
 ]
 
 method_labels = {
-    'exact gp': 'exact gp',
-    'ddsvgp': 'ddsvgp',
-    'dsoftki': 'dsoftki',
-    'tera': 'tera',
+    "exact gp": "Exact GP",
+    "ddsvgp": "DDSVGP",
+    "dsoftki": "DSoftKI",
+    "tera": "TERA",
 }
 
 markers = {
