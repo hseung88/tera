@@ -280,6 +280,22 @@ def _plot_series(
 ) -> None:
     if sub.empty:
         return
+    if (
+        x_col == "m"
+        and y_col == "avg_marginal_kl_mean"
+        and method in {"exact gp", "exact dgp", "exact dgp-deroos"}
+    ):
+        style = _method_style(method)
+        style["marker"] = "None"
+        ax.plot(
+            sub[x_col],
+            sub[y_col],
+            label=method,
+            **style,
+        )
+        ax.set_xlabel("m")
+        ax.set_ylabel(ylabel)
+        return
     yerr = sub[yerr_col] if yerr_col is not None and yerr_col in sub.columns else None
     ax.errorbar(
         sub[x_col],
@@ -505,6 +521,22 @@ def _plot_xy_series(
     yerr_col: str | None = None,
 ) -> None:
     if sub.empty:
+        return
+    if (
+        x_col == "m"
+        and y_col == "avg_marginal_kl_mean"
+        and method in {"exact gp", "exact dgp", "exact dgp-deroos"}
+    ):
+        style = _method_style(method)
+        style["marker"] = "None"
+        ax.plot(
+            sub[x_col],
+            sub[y_col],
+            label=method,
+            **style,
+        )
+        ax.set_xlabel("m")
+        ax.set_ylabel(ylabel)
         return
     xerr = sub[xerr_col] if xerr_col is not None and xerr_col in sub.columns else None
     yerr = sub[yerr_col] if yerr_col is not None and yerr_col in sub.columns else None
