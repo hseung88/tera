@@ -269,7 +269,7 @@ def plot_bo_main_regret(
             legend_handles.setdefault(method, line)
             legend_labels.setdefault(method, label)
 
-        ax.set_xlabel("Query budget")
+        ax.set_xlabel("Queried locations")
         if panel_idx == 0:
             ax.set_ylabel("Regret")
         else:
@@ -496,7 +496,7 @@ def _plot_time_regret_and_memory(
                     zorder=1,
                 )
 
-    axes[0].set_xlabel("Query budget")
+    axes[0].set_xlabel("Queried locations")
     axes[0].set_ylabel("Regret")
 
     def _k_formatter(x, pos):
