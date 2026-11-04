@@ -796,6 +796,9 @@ def plot_combined_summary_figure(
     axes[2, 1].set_yscale("log")
     axes[2, 2].set_yscale("log")
 
+    for ax in axes[1, :]:
+        ax.set_xscale("log")
+
     for ax in axes.ravel():
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
