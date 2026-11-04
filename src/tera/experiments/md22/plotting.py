@@ -17,10 +17,10 @@ method_order = [
 ]
 
 method_labels = {
-    "exact gp": "Exact GP",
-    "ddsvgp": "DDSVGP",
-    "dsoftki": "DSoftKI",
-    "tera": "TERA",
+    'exact gp': 'Exact GP',
+    'ddsvgp': 'DDSVGP',
+    'dsoftki': 'DSoftKI',
+    'tera': 'TERA',
 }
 
 markers = {
@@ -57,71 +57,146 @@ def _ordered(values: iterable_type[str]) -> list[str]:
     existing = list(dict.fromkeys(values))
     return [m for m in method_order if m in existing] + [m for m in existing if m not in method_order]
 
+method_colors = {
+    "exact gp": "#1F77B4",           # blue
+    "ddsvgp": "#2CA02C", # green
+    "dsoftki": "#FF7F0E",        # orange
+    "tera": "#D62728",               # red
+}
+
+dataset_order = [
+    "DHA",
+    "AT-AT",
+    "stachyose",
+    "AT-AT-CG-CG",
+    "buckyball-catcher",
+    "double-walled-nanotube",
+]
+
+dataset_labels = {
+    "DHA": "DHA", # \n$d=168$",
+    "AT-AT": "AT-AT", # \n$d=180$",
+    "stachyose": "Stach", # \n$d=261$",
+    "AT-AT-CG-CG": "AT-CG", # \n$d=354$",
+    "buckyball-catcher": "Bucky", # \n$d=444$",
+    "double-walled-nanotube": "DWNT", # \n$d=1110$",
+}
+
+def _ordered_datasets(values: iterable_type[str]) -> list[str]:
+    existing = [str(v) for v in dict.fromkeys(values)]
+    return [d for d in dataset_order if d in existing] + [d for d in existing if d not in dataset_order]
+
+def _dataset_label(dataset: str) -> str:
+    return dataset_labels.get(str(dataset), str(dataset))
+
+
 def plot_md22_results(csv_path: str | path_type, out_path: str | path_type, *, title: str | None = None) -> None:
     csv_path = path_type(csv_path)
     out_path = path_type(out_path)
     df = _clean(read_results(csv_path))
     if df.empty:
         raise ValueError(f"No successful rows found in {csv_path}")
+
     agg = _aggregate(df)
-    datasets = list(dict.fromkeys(df["dataset"].astype(str)))
+    datasets = _ordered_datasets(df["dataset"].astype(str))
     methods = _ordered(df["method"].astype(str))
     x = np.arange(len(datasets), dtype=float)
-    width = min(0.12, 0.8 / max(len(methods), 1))
-    offsets = (np.arange(len(methods)) - (len(methods) - 1) / 2.0) * width
 
     panels = [
-        ("raw_energy_rmse_per_atom", "Raw energy RMSE per atom"),
+        ("raw_energy_rmse_per_atom", "Test RMSE / atom"),
         ("wall_time_sec", "Wall-clock time (s)"),
         ("peak_mem_gb", "Peak GPU memory (GB)"),
     ]
-    fig, axes = plt.subplots(1, 3, figsize=(11.2, 3.2), constrained_layout=True)
+
+    plt.rcParams.update(
+        {
+            "font.family": "serif",
+            "font.size": 11,
+            "axes.titlesize": 12,
+            "axes.labelsize": 12,
+            "xtick.labelsize": 10,
+            "ytick.labelsize": 10,
+            "legend.fontsize": 12,
+        }
+    )
+
+    fig, axes = plt.subplots(1, 3, figsize=(11.0, 2.4), constrained_layout=True)
     if title:
-        fig.suptitle(title, fontsize=11)
+        fig.suptitle(title, fontsize=10)
 
     for ax, (metric, ylabel) in zip(axes, panels):
-        for j, method in enumerate(methods):
+        for method in methods:
             sub = agg[agg["method"].astype(str) == method]
-            means = []
-            errs = []
+
+            means: list[float] = []
+            errs: list[float] = []
+
             for dataset in datasets:
                 row = sub[sub["dataset"].astype(str) == dataset]
                 if row.empty:
                     means.append(np.nan)
                     errs.append(np.nan)
-                else:
-                    means.append(float(row[f"{metric}_mean"].iloc[0]))
-                    errs.append(float(row[f"{metric}_std"].iloc[0]) if f"{metric}_std" in row else np.nan)
+                    continue
+
+                means.append(float(row[f"{metric}_mean"].iloc[0]))
+                std_col = f"{metric}_std"
+                errs.append(float(row[std_col].iloc[0]) if std_col in row else np.nan)
+
             y = np.asarray(means, dtype=float)
             yerr = np.asarray(errs, dtype=float)
             yerr[~np.isfinite(yerr)] = 0.0
+
+            is_tera = method == "tera"
             ax.errorbar(
-                x + offsets[j],
+                x,
                 y,
                 yerr=yerr,
                 marker=markers.get(method, "o"),
                 linestyle="none",
-                capsize=2.0,
-                linewidth=1.0,
-                markersize=4.5 if method != 'tera' else 6.0,
+                color=method_colors.get(method, None),
+                capsize=5.0,
+                elinewidth=1.0 if is_tera else 0.8,
+                linewidth=0.0,
+                markersize=10.0,
+                markeredgewidth=1.0,
+                alpha=1.0,
                 label=method_labels.get(method, method),
+                zorder=4 if is_tera else 3,
             )
+
         ax.set_xticks(x)
-        ax.set_xticklabels(datasets, rotation=20, ha="right")
+        ax.set_xticklabels([_dataset_label(d) for d in datasets], rotation=0, ha="center")
         ax.set_ylabel(ylabel)
-        ax.grid(True, axis="y", linewidth=0.4, alpha=0.5)
+        fig.supxlabel("Benchmark", y=-0.1)
+        # ax.grid(True, axis="y", linewidth=0.45, alpha=0.28)
+        # ax.grid(False, axis="x")
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.margins(x=0.04)
+
         if metric in {"wall_time_sec", "peak_mem_gb"}:
             positive = df[metric][df[metric] > 0]
             if len(positive) > 0:
                 ax.set_yscale("log")
 
     handles, labels = axes[0].get_legend_handles_labels()
-    fig.legend(handles, labels, loc="upper center", ncol=min(len(labels), 6), frameon=False, bbox_to_anchor=(0.5, 1.08))
+    fig.legend(
+        handles,
+        labels,
+        loc="upper center",
+        ncol=min(len(labels), 6),
+        frameon=False,
+        bbox_to_anchor=(0.5, 1.15),
+        handlelength=2.3,
+        columnspacing=1.1,
+    )
+
     out_path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_path, dpi=300, bbox_inches="tight")
     if out_path.suffix.lower() != ".pdf":
         fig.savefig(out_path.with_suffix(".pdf"), bbox_inches="tight")
     plt.close(fig)
+
 
 def plot_md22_training_curves(csv_path: str | path_type, out_path: str | path_type, *, title: str | None = None) -> None:
     csv_path = path_type(csv_path)
