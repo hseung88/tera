@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b4c0393-12e1-4e8e-8de0-6b59183305ff" name="Changes" comment="legend fixed">
+    <list default="true" id="4b4c0393-12e1-4e8e-8de0-6b59183305ff" name="Changes" comment="plotting style recovered">
+      <change afterPath="$PROJECT_DIR$/scripts/prepare_bo_revision_plots.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tera/experiments/bo/plotting.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tera/experiments/bo/plotting.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +47,9 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tmdgu\PycharmProjects\tera\scripts" />
+      <recent name="C:\Users\tmdgu\PycharmProjects\tera\src\tera\experiments\bo" />
+      <recent name="C:\Users\tmdgu\PycharmProjects\tera\src\tera\experiments\md22" />
       <recent name="C:\Users\tmdgu\PycharmProjects\tera\src\tera\methods\tera" />
     </key>
   </component>
@@ -144,7 +149,31 @@
       <option name="project" value="LOCAL" />
       <updated>1793765940504</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="plotting style recovered">
+      <option name="closed" value="true" />
+      <created>1793767407368</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1793767407368</updated>
+    </task>
+    <task id="LOCAL-00012" summary="plotting style recovered">
+      <option name="closed" value="true" />
+      <created>1793767643762</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1793767643762</updated>
+    </task>
+    <task id="LOCAL-00013" summary="plotting style recovered">
+      <option name="closed" value="true" />
+      <created>1793767832221</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1793767832221</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -152,6 +181,7 @@
     <MESSAGE value="minor fix" />
     <MESSAGE value="v2.0 - tera batched impl" />
     <MESSAGE value="legend fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="legend fixed" />
+    <MESSAGE value="plotting style recovered" />
+    <option name="LAST_COMMIT_MESSAGE" value="plotting style recovered" />
   </component>
 </project>

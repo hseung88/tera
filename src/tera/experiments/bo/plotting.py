@@ -10,7 +10,6 @@ from matplotlib.ticker import FuncFormatter as func_formatter_type
 from matplotlib.patches import Patch as patch_type
 
 method_order = ["sobol", "lbfgsb", "vbo", "turbo-logei", "turbo", "tera"]
-
 method_labels = {
     "lbfgsb": "L-BFGS-B",
     "sobol": "Sobol",
@@ -19,7 +18,6 @@ method_labels = {
     "turbo-logei": "TuRBO-1",
     "tera": "TERA",
 }
-
 method_colors = {
     "lbfgsb": "#2CA02C",
     "sobol": "#000000",
@@ -28,7 +26,6 @@ method_colors = {
     "turbo-logei": "#FF7F0E",
     "tera": "#D62728",
 }
-
 markers = {
     "lbfgsb": "s",
     "sobol": "X",
@@ -37,7 +34,6 @@ markers = {
     "turbo-logei": "D",
     "tera": "*",
 }
-
 linestyles = {
     "lbfgsb": "-.",
     "sobol": "--",
@@ -103,6 +99,15 @@ def _setup_style() -> None:
     )
 
 def _mean_sem_by_x(df: pd.DataFrame, x_col: str, y_col: str) -> pd.DataFrame:
+    if x_col == "eval_index":
+        values = df.pivot(index=x_col, columns="seed", values=y_col).sort_index()
+        # Retain the incumbent of completed runs in the across-seed average.
+        values = values.ffill()
+        return pd.DataFrame({
+            x_col: values.index,
+            "mean": values.mean(axis=1).to_numpy(),
+            "sem": values.sem(axis=1).fillna(0.0).to_numpy(),
+        })
     grouped = (
         df.dropna(subset=[x_col, y_col])
         .groupby(x_col, as_index=False)[y_col]
@@ -354,7 +359,7 @@ def plot_bo_main_regret(
     ax_mem.set_ylabel("Peak GPU memory (GB)")
 
     ax_time.set_xticks(x)
-    ax_time.set_xticklabels([_method_label(m) for m in methods], rotation=0, ha="center")
+    ax_time.set_xticklabels([_method_label(m) for m in methods], rotation=0, ha="center", fontsize=8)
 
     ax_time.spines["top"].set_visible(False)
     ax_mem.spines["top"].set_visible(False)
@@ -466,12 +471,9 @@ def _plot_time_regret_and_memory(
             legend_labels.setdefault(method, label)
 
         agg_regret = _mean_sem_by_x(mdf, "eval_index", "regret")
-        time_by_eval = (
-            mdf.dropna(subset=["eval_index", "cum_wall_time_sec"])
-            .groupby("eval_index", as_index=False)["cum_wall_time_sec"]
-            .mean()
-            .sort_values("eval_index")
-        )
+        time_by_eval = _mean_sem_by_x(
+            mdf, "eval_index", "cum_wall_time_sec"
+        ).rename(columns={"mean": "cum_wall_time_sec"}).drop(columns="sem")
 
         if not agg_regret.empty and not time_by_eval.empty:
             merged = agg_regret.merge(time_by_eval, on="eval_index", how="inner")

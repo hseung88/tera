@@ -157,7 +157,7 @@ def plot_md22_results(csv_path: str | path_type, out_path: str | path_type, *, t
                 capsize=5.0,
                 elinewidth=1.0 if is_tera else 0.8,
                 linewidth=0.0,
-                markersize=10.0,
+                markersize=14 if is_tera else 10,
                 markeredgewidth=1.0,
                 # markerfacecolor=method_colors.get(method) if is_tera else "none",
                 # markeredgecolor=method_colors.get(method),
