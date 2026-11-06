@@ -1,1 +1,26 @@
 .idea/
+.vscode/
+
+/outputs/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Build and installation artifacts
+build/
+dist/
+*.egg-info/
+
+# Tool caches
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db

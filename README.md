@@ -2,14 +2,13 @@
 
 > Accepted at **the Conference on Neural Information Processing Systems (NeurIPS 2026)**, December 2026. 
 
-This repository provides the official implementation of **TERA**, a scalable derivative Gaussian process method for 
-scalar function-value prediction with observed input gradients. For each target and its Vecchia conditioning set, 
-TERA replaces the full gradient by target-specific reduced directional derivatives. For stationary kernels, this 
-reduction preserves the corresponding full-gradient conditional density exactly, while avoiding the dense derivative 
-covariance over all gradient coordinates.
-
-TERA training and prediction use batched reduced conditional systems.
-Method names in commands, results, and plot legends are lowercase; existing result labels remain supported.
+This repository provides the official implementation of **TERA**, 
+a scalable Gaussian process method for prediction and Bayesian 
+optimization with gradients. TERA combines target-specific gradient 
+reduction with a Vecchia approximation to handle high-dimensional 
+inputs and large datasets. Under the assumptions described in the paper, 
+the reduction preserves the corresponding full-gradient conditional 
+distribution while substantially reducing computational and memory costs.
 
 The code reproduces the experiments for:
 
@@ -20,8 +19,6 @@ The code reproduces the experiments for:
 ---
 
 ## Main Results
-
-The figures below show the original submission results; camera-ready experiments are being rerun.
 
 ### Posterior Fidelity and Scaling
 
@@ -34,11 +31,10 @@ wall-clock time, and peak GPU memory.
 
 ### Large-Scale GP Regression
 
-![Large-scale scalar energy prediction on MD22](figures/md22_main_metrics_rbf.png)
+![Large-scale scalar energy prediction on MD22](figures/md22_main_rbf.png)
 
-**Figure 2:** Large-scale scalar energy prediction on MD22. Panels show raw energy test RMSE per atom after conversion 
-to physical units, end-to-end wall-clock time, and peak GPU memory. All methods use isotropic squared exponential kernels 
-and identical train and test splits. Lower values are better in all panels.
+**Figure 2:** Large-scale molecular energy prediction on MD22. Panels show test RMSE, wall-clock time, and peak GPU memory. 
+All methods use isotropic SE kernels and identical train and test splits. Lower values are better in all panels.
 
 ### High-Dimensional Bayesian Optimization
 
@@ -52,27 +48,25 @@ The right panel reports wall-clock time and peak GPU memory on `Ackley-200D`.
 
 ## Installation
 
-The commands below run local source files directly; installing console commands is not required.
-
 Use Python 3.10 or newer. A CUDA-enabled PyTorch installation is recommended for the main experiments.
 
 ```bash
 python -m venv tera
 source tera/bin/activate
-pip install -e '.[md22,bo]'
+pip install -e .
 ```
 ---
 
 ## Experiments
 
-Each experiment has a default config for the camera-ready experiments and a dedicated reproduction guide with run commands.
+Each experiment has a default config and a reproduction guide with run commands.
 
 
-| Experiment                        | Run command                            | Default config                           | Documentation |
-|:----------------------------------|:--------------------------------------|:-----------------------------------------|:--|
-| Posterior fidelity and scaling    | `python scripts/run_gp_sim_kl_subprocess.py` | `configs/gp_sim/matern52_*.yaml`      | `docs/gp_simulation.md` |
-| Large-scale GP regression on MD22 | `python scripts/run_md22.py`   | `configs/md22/main.yaml` | `docs/md22_regression.md` |
-| High-dimensional BO               | `python scripts/run_bo_synthetic.py`         | `configs/bo/main.yaml`      | `docs/bo_synthetic.md` |
+| Experiment                     | Run command                                  | Default config                   | Documentation |
+|:-------------------------------|:---------------------------------------------|:---------------------------------|:--|
+| Posterior fidelity and scaling | `python scripts/run_gp_sim_kl_subprocess.py` | `configs/gp_sim/matern52_*.yaml` | `docs/gp_simulation.md` |
+| GP regression on MD22          | `python scripts/run_md22.py`                 | `configs/md22/main.yaml`         | `docs/md22_regression.md` |
+| High-dimensional BO            | `python scripts/run_bo_synthetic.py`         | `configs/bo/main.yaml`           | `docs/bo_synthetic.md` |
 
 ---
 
