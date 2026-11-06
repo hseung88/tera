@@ -1,14 +1,7 @@
 # Large-Scale GP Regression on MD22
 
-This document describes the MD22 regression experiments used in the paper. The task is scalar molecular energy 
-prediction, with observed forces converted to gradient information. The reported metric is raw energy RMSE per atom 
-after converting predictions back to physical units.
-
-The main comparison uses isotropic squared exponential kernels. The ARD Matérn-5/2 kernel is included as an additional 
-setting. The default settings in `configs/md22/main.yaml` match the paper experiments, including the 
-TERA conditioning size, noise initialization, training schedule, batch size, and learning rate.
-TERA uses batched training and prediction with batch size 32.
-TERA defaults to scaled gradient noise with ARD and iid gradient noise with an isotropic kernel, unless explicitly overridden.
+This document describes the MD22 regression experiments used in the paper.
+The default settings in `configs/md22/main.yaml` match the paper experiments.
 
 ---
 ## Download MD22 Data

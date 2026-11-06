@@ -1,12 +1,7 @@
 # High-Dimensional Bayesian Optimization
 
-The main benchmarks are `Levy-200D` and `Ackley-200D`. The main comparison uses Sobol, dimension-scaled vanilla BO, 
-TuRBO-1 with LogEI, and TERA. The default settings in `configs/bo/main.yaml` reproduce the main BO experiments 
-reported in the paper, including the evaluation budget, initial design size, TERA training schedule, acquisition optimization settings, 
-and random seeds.
-TERA uses batched training and prediction, with initial lengthscale 1.0 (`tera_base_lengthscale`).
-The budget is 150 queried locations, including 30 initial points shared across methods for each seed.
-Function-only methods do not evaluate objective gradients.
+The default settings in `configs/bo/main.yaml` reproduce the main BO experiments 
+reported in the paper.
 
 ---
 ## How to Run

@@ -2,11 +2,6 @@
 
 This document describes the GP-simulated posterior fidelity experiments used in the paper. The goal is to measure how 
 closely TERA approximates exact derivative GP inference when the data are generated from the same GP prior. 
-Training inputs and evaluation inputs are sampled separately, and the main metric is the average marginal KL divergence 
-to the exact derivative GP posterior at the evaluation points.
-
-The default configs use a Matérn-5/2 kernel, noiseless function and gradient observations, Sobol designs, and the target median prior correlation calibration reported in the paper.
-TERA prediction is batched. Input and observation seeds are shared across methods and conditioning sizes.
 
 ---
 
